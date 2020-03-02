@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<style type="text/css">
+		#ocean {
+			background-image: url("backgroundNew.jpg");
+			width: 900px;
+			height: 700px;
+		}
+		.player {
+			position: absolute;
+			background-image: url("playerNew.png");
+			width: 70px;
+			height: 75px;
+		}
+		.enemy {
+			position: absolute;
+			background-image: url("enemyNew.png");
+			width: 70px;
+			height: 75px;
+		}
+	</style>
+
+	<div id="ocean">
+		<div id="players"></div>
+		<div id="enemies"></div>
+	</div>
+
+<script type="text/javascript">
+	
+	var player = {
+		left: 450,
+		top: 620
+	}
+	var enemies = [
+		{left: 150,top: 200},
+		{left: 250,top: 250},
+		{left: 350,top: 300},
+		{left: 450,top: 350},
+		{left: 550,top: 400},
+		{left: 650,top: 450}
+	]
+	var movementSpeed = 10;
+	var boundary = {
+		left: 20,
+		right: 820,
+		top: 350,
+		down: 620
+	}
+	function drawPlayer () {
+		content = "";
+		content = "<div class='player' style='left:" + player.left + "px; top:" + player.top + "px'></div>";
+
+		document.getElementById('players').innerHTML = content;
+	}
+	function drawEnemies () {
+		content = "";
+		for (idx = 0; idx < enemies.length; idx++) {
+			content += "<div class='enemy' style='left:" + enemies[idx].left + "px; top:" + enemies[idx].top + "px'></div>";
+		}
+		document.getElementById('enemies').innerHTML = content;
+	}
+	drawPlayer();
+
+	document.onkeydown = function(e) {
+		if (e.keyCode == 37) { // LEFT
+			if(player.left - movementSpeed <= boundary.left){
+				player.left = boundary.left;
+			}
+			else {
+				player.left -= movementSpeed;
+			}
+		}
+		if (e.keyCode == 38) { // UP
+			if(player.top - movementSpeed <= boundary.top){
+				player.top = boundary.top;
+			}
+			else {
+				player.top -= movementSpeed;
+			}
+		}
+		if (e.keyCode == 39) { // RIGHT
+			if(player.left + movementSpeed >= boundary.right){
+				player.left = boundary.right;
+			}
+			else {
+				player.left += movementSpeed;
+			}
+		}
+		if (e.keyCode == 40) { // DOWN
+			if(player.top + movementSpeed >= boundary.down){
+				player.top = boundary.down;
+			}
+			else {
+				player.top += movementSpeed;
+			}
+		}
+
+		drawPlayer();
+		
+	}
+drawEnemies();
+</script>
+
+</body>
+</html>
